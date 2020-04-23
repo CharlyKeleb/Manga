@@ -301,7 +301,6 @@ class _ProfileState extends State<Profile> {
                           height: 80,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey, width: 0.1)
                           ),
                           child: Row(
                             children: <Widget>[
