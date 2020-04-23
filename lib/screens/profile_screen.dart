@@ -48,7 +48,7 @@ class _ProfileState extends State<Profile> {
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
-                                    color: Colors.black),
+                                    ),
                               ),
                               SizedBox(
                                 height: 2,
@@ -81,18 +81,21 @@ class _ProfileState extends State<Profile> {
                             ),
                             Container(
                               height: 30,
-                              width: 60,
+                              width: 70,
                               decoration: BoxDecoration(
                                   color: Colors.blue,
                                   borderRadius: BorderRadius.circular(5)),
                               child: Center(
-                                  child: Text(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 5, right: 5),
+                                    child: Text(
                                 'NARUTO',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w100,
-                                    fontSize: 15,
-                                    color: Colors.white),
-                              )),
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 15,
+                                      color: Colors.white),
+                              ),
+                                  )),
                             ),
                           ],
                         ),
@@ -127,7 +130,6 @@ class _ProfileState extends State<Profile> {
           ),
           Container(
             height: 80,
-            color: Colors.white30,
             child: Padding(
               padding: const EdgeInsets.only(left: 25.0, right: 25, top: 10),
               child: Row(
@@ -139,7 +141,6 @@ class _ProfileState extends State<Profile> {
                         '150',
                         style: TextStyle(
                             fontSize: 22,
-                            color: Colors.black,
                             fontWeight: FontWeight.w300),
                       ),
                       SizedBox(
@@ -149,7 +150,6 @@ class _ProfileState extends State<Profile> {
                         'Favorite Animes',
                         style: TextStyle(
                             fontSize: 15,
-                            color: Colors.black54,
                             fontWeight: FontWeight.w400),
                       )
                     ],
@@ -162,7 +162,7 @@ class _ProfileState extends State<Profile> {
                     child: Container(
                       height: 50,
                       width: 0.3,
-                      color: Colors.black,
+                      color: Colors.grey,
                     ),
                   ),
                   SizedBox(
@@ -174,7 +174,6 @@ class _ProfileState extends State<Profile> {
                         '754',
                         style: TextStyle(
                             fontSize: 22,
-                            color: Colors.black,
                             fontWeight: FontWeight.w300),
                       ),
                       SizedBox(
@@ -184,7 +183,6 @@ class _ProfileState extends State<Profile> {
                         'Likes',
                         style: TextStyle(
                             fontSize: 15,
-                            color: Colors.black54,
                             fontWeight: FontWeight.w400),
                       ),
                     ],
@@ -197,7 +195,7 @@ class _ProfileState extends State<Profile> {
                     child: Container(
                       height: 50,
                       width: 0.3,
-                      color: Colors.black,
+                      color: Colors.grey,
                     ),
                   ),
                   SizedBox(
@@ -209,7 +207,6 @@ class _ProfileState extends State<Profile> {
                         '305',
                         style: TextStyle(
                             fontSize: 22,
-                            color: Colors.black,
                             fontWeight: FontWeight.w300),
                       ),
                       SizedBox(
@@ -219,7 +216,6 @@ class _ProfileState extends State<Profile> {
                         'Disikes',
                         style: TextStyle(
                             fontSize: 15,
-                            color: Colors.black54,
                             fontWeight: FontWeight.w400),
                       ),
                     ],
@@ -303,7 +299,10 @@ class _ProfileState extends State<Profile> {
                             left: 10.0, right: 10.0, top: 10),
                         child: Container(
                           height: 80,
-                          color: Colors.white30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.grey, width: 0.1)
+                          ),
                           child: Row(
                             children: <Widget>[
                               Padding(
@@ -390,6 +389,7 @@ class _ProfileState extends State<Profile> {
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
+                                                          left: 5,
                                                             top: 3.0,
                                                             bottom: 3),
                                                     child: Text(
