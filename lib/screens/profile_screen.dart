@@ -87,12 +87,12 @@ class _ProfileState extends State<Profile> {
                                   borderRadius: BorderRadius.circular(5)),
                               child: Center(
                                   child: Text(
-                                    'NARUTO',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w100,
-                                        fontSize: 15,
-                                        color: Colors.white),
-                                  )),
+                                'NARUTO',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w100,
+                                    fontSize: 15,
+                                    color: Colors.white),
+                              )),
                             ),
                           ],
                         ),
@@ -107,9 +107,7 @@ class _ProfileState extends State<Profile> {
                     height: 17,
                     width: 17,
                     decoration: BoxDecoration(
-                      color: Theme
-                          .of(context)
-                          .accentColor,
+                      color: Theme.of(context).accentColor,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Center(
@@ -249,9 +247,7 @@ class _ProfileState extends State<Profile> {
                             Spacer(),
                             Icon(
                               Feather.heart,
-                              color: Theme
-                                  .of(context)
-                                  .accentColor,
+                              color: Theme.of(context).accentColor,
                             )
                           ],
                         ),
@@ -261,10 +257,7 @@ class _ProfileState extends State<Profile> {
                             left: 10.0, right: 10, top: 10),
                         child: Container(
                           height: 150,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
+                          width: MediaQuery.of(context).size.width,
                           child: ListView.builder(
                               itemCount: 6,
                               scrollDirection: Axis.horizontal,
@@ -282,8 +275,7 @@ class _ProfileState extends State<Profile> {
                                       Radius.circular(1),
                                     ),
                                     child: Image.asset(
-                                      "assets/images/${Random().nextInt(
-                                          6)}.jpg",
+                                      "assets/images/${Random().nextInt(6)}.jpg",
                                       height: 300,
                                       width: 100,
                                       fit: BoxFit.cover,
@@ -318,7 +310,7 @@ class _ProfileState extends State<Profile> {
                                 padding: const EdgeInsets.only(bottom: 0.0),
                                 child: CircleAvatar(
                                   backgroundImage:
-                                  AssetImage('assets/images/12.jpg'),
+                                      AssetImage('assets/images/12.jpg'),
                                   radius: 30,
                                 ),
                               ),
@@ -339,37 +331,27 @@ class _ProfileState extends State<Profile> {
                                       children: <Widget>[
                                         Icon(
                                           Icons.star,
-                                          color: Theme
-                                              .of(context)
-                                              .accentColor,
+                                          color: Theme.of(context).accentColor,
                                           size: 15,
                                         ),
                                         Icon(
                                           Icons.star,
-                                          color: Theme
-                                              .of(context)
-                                              .accentColor,
+                                          color: Theme.of(context).accentColor,
                                           size: 15,
                                         ),
                                         Icon(
                                           Icons.star,
-                                          color: Theme
-                                              .of(context)
-                                              .accentColor,
+                                          color: Theme.of(context).accentColor,
                                           size: 15,
                                         ),
                                         Icon(
                                           Icons.star_half,
-                                          color: Theme
-                                              .of(context)
-                                              .accentColor,
+                                          color: Theme.of(context).accentColor,
                                           size: 15,
                                         ),
                                         Icon(
                                           Icons.star_border,
-                                          color: Theme
-                                              .of(context)
-                                              .accentColor,
+                                          color: Theme.of(context).accentColor,
                                           size: 15,
                                         ),
                                       ],
@@ -381,8 +363,8 @@ class _ProfileState extends State<Profile> {
                                 width: 15,
                               ),
                               Padding(
-                                padding:
-                                const EdgeInsets.only(bottom: 10.0, top: 10),
+                                padding: const EdgeInsets.only(
+                                    bottom: 10.0, top: 10),
                                 child: Container(
                                   height: 80,
                                   width: 170,
@@ -394,23 +376,27 @@ class _ProfileState extends State<Profile> {
                                     children: <Widget>[
                                       Padding(
                                         padding:
-                                        const EdgeInsets.only(left: 3.0),
+                                            const EdgeInsets.only(left: 3.0),
                                         child: Container(
-                                          height: 53,
+                                          height: 50,
                                           width: 110,
                                           child: ListView(
                                               scrollDirection: Axis.vertical,
                                               shrinkWrap: true,
                                               children: <Widget>[
                                                 ClipRRect(
-                                                  borderRadius: BorderRadius
-                                                      .circular(10),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
                                                   child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .only(
-                                                        top: 3.0, bottom: 3),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 3.0,
+                                                            bottom: 3),
                                                     child: Text(
-                                                        'This is my Best Anime, i love  watching it!, because of it is nice'),
+                                                      'This is my Best Anime, i love  watching it!',
+                                                      style: TextStyle(
+                                                          color: Colors.white, fontWeight: FontWeight.w300,fontSize: 13),
+                                                    ),
                                                   ),
                                                 )
                                               ]),
@@ -424,7 +410,7 @@ class _ProfileState extends State<Profile> {
                                         width: 50,
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(5),
+                                                BorderRadius.circular(5),
                                             image: DecorationImage(
                                               image: AssetImage(
                                                   'assets/images/1.jpg'),
