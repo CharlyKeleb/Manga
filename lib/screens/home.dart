@@ -149,15 +149,23 @@ class _HomeState extends State<Home> {
               },
             ),
           ),
-          ListTile(
-            contentPadding: EdgeInsets.all(0),
-            title: Text(
-              "Recent Trends",
-              style: TextStyle(
-                fontSize: 20,
-              ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 10, top: 10),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  'Recent Trends',
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w400),
+                ),
+                Spacer(),
+                Icon(
+                  Feather.chevron_right,
+                  size: 30,
+                  color: Colors.grey,
+                )
+              ],
             ),
-            trailing: Icon(Icons.arrow_forward_ios),
           ),
           Container(
             height: 200,
@@ -208,15 +216,23 @@ class _HomeState extends State<Home> {
               },
             ),
           ),
-          ListTile(
-            contentPadding: EdgeInsets.all(0),
-            title: Text(
-              "Top Collections",
-              style: TextStyle(
-                fontSize: 20,
-              ),
+          Padding(
+            padding: const EdgeInsets.only(left:10.0, right: 10.0, top: 10, bottom: 10),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  'Top Collections',
+                  style: TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w400),
+                ),
+                Spacer(),
+                Icon(
+                  Feather.chevron_right,
+                  color: Colors.grey,
+                  size: 30,
+                )
+              ],
             ),
-            trailing: Icon(Icons.arrow_forward_ios),
           ),
           Container(
             height: 130,

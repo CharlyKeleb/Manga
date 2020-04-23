@@ -1,10 +1,10 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:manga_ui/screens/downloads.dart';
-
+import 'package:manga_ui/screens/action_screen.dart';
+import 'package:manga_ui/screens/adventure_screen.dart';
+import 'package:manga_ui/screens/music_screen.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -46,10 +46,8 @@ class _ExploreState extends State<Explore> {
                     ),
                     onTap: () {},
                   ),
-                  Text(
-                    'search manga',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
-                  )
+                  Text('search manga',
+                      style: TextStyle(fontSize: 14, color: Colors.grey))
                 ],
               ),
             ),
@@ -63,7 +61,10 @@ class _ExploreState extends State<Explore> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            trailing: Icon(Icons.arrow_forward_ios),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              size: 20,
+            ),
           ),
           Container(
               height: 35,
@@ -88,19 +89,25 @@ class _ExploreState extends State<Explore> {
                           ),
                           alignment: Alignment.centerLeft,
                           child: InkWell(
-                            onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => Downloads()),);},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ActionScreen()),
+                              );
+                            },
                             child: Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Row(
                                 children: <Widget>[
                                   Icon(
-                                    Icons.favorite,
+                                    Icons.whatshot,
                                     color: Colors.white,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 3.0),
                                     child: Text(
-                                      'Romance',
+                                      'Action',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   )
@@ -111,130 +118,80 @@ class _ExploreState extends State<Explore> {
                         ),
                       ),
                       SizedBox(width: 20),
-                      Container(
-                        height: 30,
-                        width: 110,
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              bottomLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
-                              bottomRight: Radius.circular(12)),
-                        ),
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.screen_lock_landscape,
-                                color: Colors.white,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 5.0),
-                                child: Text(
-                                  'Drama',
-                                  style: TextStyle(color: Colors.white),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => AdventureScreen()));
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 110,
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                bottomLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                                bottomRight: Radius.circular(12)),
+                          ),
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.wc,
+                                  color: Colors.white,
                                 ),
-                              )
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 3.0),
+                                  child: Text(
+                                    'Adventure',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(width: 20),
-                      Container(
-                        height: 30,
-                        width: 110,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              bottomLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
-                              bottomRight: Radius.circular(12)),
-                        ),
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.wc,
-                                color: Colors.white,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 3.0),
-                                child: Text(
-                                  'Adventure',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )
-                            ],
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => MusicScreen()));
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: Colors.pink,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                bottomLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                                bottomRight: Radius.circular(12)),
                           ),
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      Container(
-                        height: 30,
-                        width: 110,
-                        decoration: BoxDecoration(
-                          color: Colors.pink,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              bottomLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
-                              bottomRight: Radius.circular(12)),
-                        ),
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Feather.music,
-                                color: Colors.white,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 3.0),
-                                child: Text(
-                                  'Music',
-                                  style: TextStyle(color: Colors.white),
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Feather.music,
+                                  color: Colors.white,
                                 ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      Container(
-                        height: 30,
-                        width: 110,
-                        decoration: BoxDecoration(
-                          color: Colors.purpleAccent,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              bottomLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
-                              bottomRight: Radius.circular(12)),
-                        ),
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Feather.book,
-                                color: Colors.white,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 3.0),
-                                child: Text(
-                                  'Books',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 3.0),
+                                  child: Text(
+                                    'Music',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -242,12 +199,25 @@ class _ExploreState extends State<Explore> {
                   )
                 ],
               )),
-          ListTile(
-            title: Text(
-              'Recommend',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            trailing: Icon(Icons.arrow_forward_ios),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0, left: 10),
+                child: Text(
+                  'Recommend',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0, right: 10),
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  size: 20,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
           ),
           Container(
             height: 200,
@@ -298,12 +268,27 @@ class _ExploreState extends State<Explore> {
               },
             ),
           ),
-          ListTile(
-              title: Text(
-                'New Episodes',
-                style: TextStyle(fontWeight: FontWeight.bold),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, left: 10, bottom: 10),
+                child: Text(
+                  'New Episodes',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
-              trailing: Icon(Icons.arrow_drop_down)),
+              Spacer(),
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 10.0, right: 10, bottom: 10),
+                child: Icon(
+                  Icons.arrow_drop_down,
+                  size: 20,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
           Container(
               height: 200,
               width: MediaQuery.of(context).size.width,

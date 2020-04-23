@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:manga_ui/screens/explore.dart';
 import 'package:manga_ui/screens/home.dart';
+import 'package:manga_ui/screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -22,8 +23,7 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           Home(),
           Explore(),
-          Text("1"),
-          Text("1"),
+          Profile(),
         ],
       ),
 
@@ -51,16 +51,6 @@ class _MainScreenState extends State<MainScreen> {
               "Explore",
             ),
           ),
-
-          BottomNavigationBarItem(
-            icon: Icon(
-              Feather.book_open,
-            ),
-            title: Text(
-              "Downloads",
-            ),
-          ),
-
           BottomNavigationBarItem(
             icon: Icon(
               Feather.user,
