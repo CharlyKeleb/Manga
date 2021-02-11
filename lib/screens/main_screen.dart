@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:manga_ui/screens/categories.dart';
 import 'package:manga_ui/screens/explore.dart';
+import 'package:manga_ui/screens/explore_demo.dart';
 import 'package:manga_ui/screens/home.dart';
 import 'package:manga_ui/screens/profile_screen.dart';
 
@@ -22,11 +24,11 @@ class _MainScreenState extends State<MainScreen> {
         onPageChanged: onPageChanged,
         children: [
           Home(),
-          Explore(),
-          Profile(),
+          ExploreDemo(),
+          // Profile(),
+          Categories(),
         ],
       ),
-
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).primaryColor,
         selectedItemColor: Theme.of(context).accentColor,
@@ -38,26 +40,19 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(
               Feather.home,
             ),
-            title: Text(
-              "Home",
-            ),
+            label: "Home",
           ),
-
           BottomNavigationBarItem(
             icon: Icon(
               Feather.compass,
             ),
-            title: Text(
-              "Explore",
-            ),
+            label: "Explore",
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Feather.user,
             ),
-            title: Text(
-              "Profile",
-            ),
+            label: "Categories",
           ),
         ],
         onTap: navigationTapped,
@@ -75,6 +70,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     _pageController = PageController(initialPage: 0);
   }
+
   void onPageChanged(int page) {
     setState(() {
       this._page = page;

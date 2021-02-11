@@ -15,45 +15,47 @@ class _ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Container(
-              height: 30,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).primaryColor,
-                    offset: Offset(0.0, 1.5),
-                    blurRadius: 1.0,
-                  ),
-                ],
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
+      appBar: AppBar(
+        title: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Container(
+            height: 30,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).primaryColor,
+                  offset: Offset(0.0, 1.5),
+                  blurRadius: 1.0,
                 ),
-                color: Colors.white70,
+              ],
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
-              child: Row(
-                children: <Widget>[
-                  InkWell(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Icon(
-                        Feather.search,
-                        color: Theme.of(context).accentColor,
-                        size: 17,
-                      ),
+              color: Colors.white70,
+            ),
+            child: Row(
+              children: <Widget>[
+                InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Icon(
+                      Feather.search,
+                      color: Theme.of(context).accentColor,
+                      size: 17,
                     ),
-                    onTap: () {},
                   ),
-                  Text('search manga',
-                      style: TextStyle(fontSize: 14, color: Colors.grey))
-                ],
-              ),
+                  onTap: () {},
+                ),
+                Text('search manga',
+                    style: TextStyle(fontSize: 14, color: Colors.grey))
+              ],
             ),
           ),
         ),
-        body: ListView(padding: EdgeInsets.only(left: 10), children: <Widget>[
+      ),
+      body: ListView(
+        padding: EdgeInsets.only(left: 10),
+        children: <Widget>[
           ListTile(
             title: Text(
               'Popular Genres',
@@ -290,45 +292,49 @@ class _ExploreState extends State<Explore> {
             ],
           ),
           Container(
-              height: 200,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: 8,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            height: 200,
-                            width: 150,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              elevation: 4,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                                child: Image.asset(
-                                  "assets/images/${Random().nextInt(6)}.jpg",
-                                  height: 210,
-                                  width: 135,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+            height: 200,
+            width: MediaQuery.of(context).size.width,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemCount: 8,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.only(right: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        height: 200,
+                        width: 150,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
                             ),
                           ),
-                        ],
+                          elevation: 4,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            child: Image.asset(
+                              "assets/images/${Random().nextInt(6)}.jpg",
+                              height: 210,
+                              width: 135,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
-                    );
-                  }))
-        ]));
+                    ],
+                  ),
+                );
+              },
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
