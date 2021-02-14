@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:manga_ui/screens/categories.dart';
 import 'package:manga_ui/screens/explore.dart';
-import 'package:manga_ui/screens/explore_demo.dart';
 import 'package:manga_ui/screens/home.dart';
-import 'package:manga_ui/screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -24,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
         onPageChanged: onPageChanged,
         children: [
           Home(),
-          ExploreDemo(),
+          Explore(),
           // Profile(),
           Categories(),
         ],
@@ -50,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Feather.user,
+              Feather.grid,
             ),
             label: "Categories",
           ),

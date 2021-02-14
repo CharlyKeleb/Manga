@@ -1,11 +1,17 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:manga_ui/providers/action_manga_provider.dart';
-import 'package:manga_ui/providers/romance_anime_provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:manga_ui/providers/action/action_manga_provider.dart';
+import 'package:manga_ui/providers/action/category_item_provider.dart';
+import 'package:manga_ui/providers/adventure/adventure_anime_provider.dart';
+import 'package:manga_ui/providers/adventure/adventure_manga_provider.dart';
+import 'package:manga_ui/providers/romance/romance_anime_provider.dart';
+import 'package:manga_ui/providers/romance/romance_manga_provider.dart';
+import 'package:manga_ui/widgets/details.dart';
 import 'package:provider/provider.dart';
-import 'package:manga_ui/providers/category_item_provider.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -16,6 +22,7 @@ class _CategoriesState extends State<Categories> {
   PageController _pageController;
   int _page = 0;
   int selectedItem = 0;
+  var initOffset = Random().nextInt(5);
 
   @override
   Widget build(BuildContext context) {
@@ -50,48 +57,9 @@ class _CategoriesState extends State<Categories> {
                         },
                         child: Container(
                           height: 30,
-                          width: 108,
-                          decoration: BoxDecoration(
-                            color: 0 == selectedItem ? Colors.red : Colors.pink,
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.tv,
-                                  color: 0 == selectedItem
-                                      ? Colors.white
-                                      : Colors.white,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 3.0),
-                                  child: Text(
-                                    'Recommended',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 10.0),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 5.0),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            navigationTapped(1);
-                          });
-                          selectItem(1);
-                        },
-                        child: Container(
-                          height: 30,
                           width: 110,
                           decoration: BoxDecoration(
-                            color: 1 == selectedItem ? Colors.red : Colors.pink,
+                            color: 0 == selectedItem ? Colors.red : Colors.pink,
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           alignment: Alignment.centerLeft,
@@ -119,16 +87,16 @@ class _CategoriesState extends State<Categories> {
                       InkWell(
                         onTap: () {
                           setState(() {
-                            navigationTapped(2);
+                            navigationTapped(1);
                           });
-                          selectItem(2);
+                          selectItem(1);
                           print(_page);
                         },
                         child: Container(
                           height: 30,
                           width: 110,
                           decoration: BoxDecoration(
-                            color: 2 == selectedItem ? Colors.red : Colors.pink,
+                            color: 1 == selectedItem ? Colors.red : Colors.pink,
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           alignment: Alignment.centerLeft,
@@ -156,15 +124,15 @@ class _CategoriesState extends State<Categories> {
                       InkWell(
                         onTap: () {
                           setState(() {
-                            navigationTapped(3);
+                            navigationTapped(2);
                           });
-                          selectItem(3);
+                          selectItem(2);
                         },
                         child: Container(
                           height: 30,
                           width: 110,
                           decoration: BoxDecoration(
-                            color: 3 == selectedItem ? Colors.red : Colors.pink,
+                            color: 2 == selectedItem ? Colors.red : Colors.pink,
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           alignment: Alignment.centerLeft,
@@ -202,7 +170,6 @@ class _CategoriesState extends State<Categories> {
                 controller: _pageController,
                 onPageChanged: onPageChanged,
                 children: [
-                  buildRecommended(),
                   buildActionAnime(),
                   buildRomanceAnime(),
                   buildAdventureAnime(),
@@ -215,123 +182,7 @@ class _CategoriesState extends State<Categories> {
     );
   }
 
-  Widget buildRecommended() {
-    return Column(
-      children: [
-        ListTile(
-          leading: Text(
-            'Recommended',
-            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0),
-          ),
-          trailing: Icon(Icons.arrow_drop_down_sharp),
-        ),
-        Container(
-          height: 200,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: 5,
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    height: 150,
-                    width: 110,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      elevation: 4,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        child: Image.asset(
-                          "assets/images/${Random().nextInt(16)}.jpg",
-                          height: 150,
-                          width: 110,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Text("Dragon ball Z"),
-                  Text(
-                    "Manga",
-                    style: TextStyle(
-                      color: Theme.of(context).accentColor,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-        ListTile(
-          leading: Text(
-            'New Trends',
-            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0),
-          ),
-          trailing: Icon(Icons.arrow_drop_down_sharp),
-        ),
-        Container(
-          height: 225,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: 5,
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 210,
-                    width: 135,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      elevation: 4,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        child: Image.asset(
-                          "assets/images/${Random().nextInt(6)}.jpg",
-                          height: 210,
-                          width: 135,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 3.0),
-                  Center(
-                    child: Text(
-                      "Boruto-Naruto",
-                      style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                  )
-                ],
-              );
-            },
-          ),
-        )
-      ],
-    );
-  }
+
 
   Widget buildActionAnime() {
     return ListView(
@@ -340,10 +191,17 @@ class _CategoriesState extends State<Categories> {
       children: [
         FutureBuilder(
           future: Provider.of<CategoryAnimeProvider>(context, listen: false)
-              .fetchAndSetByCategories('anime', 'action', 0),
+              .fetchAndSetByCategories('anime', 'action', initOffset),
           builder: (context, dataSnapShot) {
             if (dataSnapShot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                child: Container(
+                  height: 300.0,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              );
             } else if (dataSnapShot.error == null) {
               print('successful');
               return Consumer<CategoryAnimeProvider>(
@@ -356,7 +214,14 @@ class _CategoriesState extends State<Categories> {
                           style: TextStyle(
                               fontWeight: FontWeight.w900, fontSize: 20.0),
                         ),
-                        trailing: Icon(Icons.arrow_forward_ios),
+                        trailing: InkWell(
+                          onTap: () {
+                            setState(() {
+                              initOffset += 10;
+                            });
+                          },
+                          child: Icon(Icons.arrow_forward_ios),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -371,37 +236,82 @@ class _CategoriesState extends State<Categories> {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Container(
-                                    height: 230,
-                                    width: 135,
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (_) => Details(
+                                            movie: anime.movieItems[i],
+                                          ),
                                         ),
-                                      ),
-                                      elevation: 4,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
-                                        child: Image.network(
-                                          anime.movieItems[i]?.coverImage ?? "",
-                                          height: 210,
-                                          width: 135,
-                                          fit: BoxFit.cover,
+                                      );
+                                    },
+                                    child: Hero(
+                                      tag: anime.movieItems[i].id,
+                                      child: Container(
+                                        height: 230,
+                                        width: 135,
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                          ),
+                                          elevation: 4,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                            child: CachedNetworkImage(
+                                              imageUrl: anime
+                                                  .movieItems[i].coverImage,
+                                              imageBuilder:
+                                                  (context, imageProvider) =>
+                                                      Container(
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                              placeholder: (context, url) =>
+                                                  Center(
+                                                child: SpinKitFadingCircle(
+                                                  size: 25,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                ),
+                                              ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Center(
+                                                child: Icon(
+                                                  Icons.error,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                   SizedBox(height: 3.0),
                                   Center(
-                                    child: Text(
-                                      anime.movieItems[i].title,
-                                      style: TextStyle(
-                                        fontSize: 10.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).accentColor,
+                                    child: Container(
+                                      width: 110.0,
+                                      child: Center(
+                                        child: Text(
+                                          anime.movieItems[i].title,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 10.0,
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   )
@@ -417,16 +327,58 @@ class _CategoriesState extends State<Categories> {
                           style: TextStyle(
                               fontWeight: FontWeight.w900, fontSize: 20.0),
                         ),
-                        trailing: Icon(Icons.arrow_forward_ios),
+                        trailing: InkWell(
+                          onTap: () {
+                            setState(() {
+                              initOffset += 10;
+                            });
+                          },
+                          child: Icon(Icons.arrow_forward_ios),
+                        ),
                       ),
                     ],
                   );
                 },
               );
             } else {
-              return Center(
-                child: Text(
-                  dataSnapShot.error.toString(),
+              return Container(
+                height: 100.0,
+                child: Center(
+                  child: Container(
+                    height: 42.0,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(0.0, 1.5),
+                          blurRadius: 1.0,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: InkWell(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Retry',
+                            style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               );
             }
@@ -434,7 +386,7 @@ class _CategoriesState extends State<Categories> {
         ),
         FutureBuilder(
           future: Provider.of<ActionMangaProvider>(context, listen: false)
-              .fetchAndActionManga(0),
+              .fetchAndActionManga(initOffset),
           builder: (context, dataSnapshot) {
             if (dataSnapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -456,37 +408,79 @@ class _CategoriesState extends State<Categories> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Container(
-                                height: 230,
-                                width: 135,
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (_) => Details(
+                                        movie: manga.movieItems[i],
+                                      ),
                                     ),
-                                  ),
-                                  elevation: 4,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                    child: Image.network(
-                                      manga.movieItems[i]?.posterImage ?? "",
-                                      height: 210,
-                                      width: 135,
-                                      fit: BoxFit.cover,
+                                  );
+                                },
+                                child: Hero(
+                                  tag: manga.movieItems[i].id,
+                                  child: Container(
+                                    height: 230,
+                                    width: 135,
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                      ),
+                                      elevation: 4,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              manga.movieItems[i].posterImage,
+                                          imageBuilder:
+                                              (context, imageProvider) =>
+                                                  Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          placeholder: (context, url) => Center(
+                                            child: SpinKitFadingCircle(
+                                              size: 25,
+                                              color:
+                                                  Theme.of(context).accentColor,
+                                            ),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              Center(
+                                            child: Icon(
+                                              Icons.error,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                               SizedBox(height: 3.0),
                               Center(
-                                child: Text(
-                                  manga.movieItems[i].title,
-                                  style: TextStyle(
-                                    fontSize: 10.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).accentColor,
+                                child: Container(
+                                  width: 110.0,
+                                  child: Center(
+                                    child: Text(
+                                      manga.movieItems[i].title,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 10.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context).accentColor,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )
@@ -499,8 +493,45 @@ class _CategoriesState extends State<Categories> {
                 },
               );
             } else {
-              return Center(
-                child: Text(dataSnapshot.error),
+              return Container(
+                height: 500.0,
+                child: Center(
+                  child: Container(
+                    height: 42.0,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(0.0, 1.5),
+                          blurRadius: 1.0,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: InkWell(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Retry',
+                            style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               );
             }
           },
@@ -511,18 +542,26 @@ class _CategoriesState extends State<Categories> {
 
   Widget buildRomanceAnime() {
     return ListView(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       children: [
         FutureBuilder(
           future: Provider.of<RomanceAnimeProvider>(context, listen: false)
-              .fetchAndRomanceAnime(10),
+              .fetchAndRomanceAnime(initOffset),
           builder: (context, dataSnapShot) {
             if (dataSnapShot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                child: Container(
+                  height: 300.0,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              );
             } else if (dataSnapShot.error == null) {
               print('successful');
-              return Consumer<CategoryAnimeProvider>(
+              return Consumer<RomanceAnimeProvider>(
                 builder: (context, anime, _) {
                   return Column(
                     children: [
@@ -532,7 +571,14 @@ class _CategoriesState extends State<Categories> {
                           style: TextStyle(
                               fontWeight: FontWeight.w900, fontSize: 20.0),
                         ),
-                        trailing: Icon(Icons.arrow_forward_ios),
+                        trailing: InkWell(
+                          onTap: () {
+                            setState(() {
+                              initOffset += 10;
+                            });
+                          },
+                          child: Icon(Icons.arrow_forward_ios),
+                        ),
                       ),
                       Container(
                         height: 230,
@@ -543,38 +589,82 @@ class _CategoriesState extends State<Categories> {
                           itemCount: anime.movieItems.length,
                           itemBuilder: (BuildContext context, int i) {
                             return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Container(
-                                  height: 210,
-                                  width: 135,
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (_) => Details(
+                                          movie: anime.movieItems[i],
+                                        ),
                                       ),
-                                    ),
-                                    elevation: 4,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
-                                      ),
-                                      child: Image.network(
-                                        anime.movieItems[i].coverImage,
-                                        height: 210,
-                                        width: 135,
-                                        fit: BoxFit.cover,
+                                    );
+                                  },
+                                  child: Hero(
+                                    tag: anime.movieItems[i].id,
+                                    child: Container(
+                                      height: 210,
+                                      width: 135,
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                        ),
+                                        elevation: 4,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                anime.movieItems[i].coverImage,
+                                            imageBuilder:
+                                                (context, imageProvider) =>
+                                                    Container(
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                            placeholder: (context, url) =>
+                                                Center(
+                                              child: SpinKitFadingCircle(
+                                                size: 25,
+                                                color: Theme.of(context)
+                                                    .accentColor,
+                                              ),
+                                            ),
+                                            errorWidget:
+                                                (context, url, error) => Center(
+                                              child: Icon(
+                                                Icons.error,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                                 SizedBox(height: 3.0),
                                 Center(
-                                  child: Text(
-                                    anime.movieItems[i].type,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context).accentColor,
+                                  child: Container(
+                                    width: 135.0,
+                                    child: Center(
+                                      child: Text(
+                                        anime.movieItems[i].title,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 )
@@ -589,159 +679,499 @@ class _CategoriesState extends State<Categories> {
                           style: TextStyle(
                               fontWeight: FontWeight.w900, fontSize: 20.0),
                         ),
-                        trailing: Icon(Icons.arrow_forward_ios),
+                        trailing: InkWell(
+                          onTap: () {
+                            setState(() {
+                              initOffset += 10;
+                            });
+                          },
+                          child: Icon(Icons.arrow_forward_ios),
+                        ),
                       ),
-                      // FutureBuilder(
-                      //     future: Provider.of<CategoryAnimeProvider>(context,
-                      //             listen: false)
-                      //         .fetchAndSetByCategories('manga', 'romance', 10),
-                      //     builder: (context, dataSnapShot) {
-                      //       if (dataSnapShot.connectionState ==
-                      //           ConnectionState.waiting) {
-                      //         return Center(child: CircularProgressIndicator());
-                      //       } else if (dataSnapShot.error == null) {
-                      //         print('successful');
-                      //         return Consumer<CategoryAnimeProvider>(
-                      //             builder: (context, manga, _) {
-                      //           return Container(
-                      //             height: 230.0,
-                      //             width: MediaQuery.of(context).size.width,
-                      //             child: ListView.builder(
-                      //               scrollDirection: Axis.horizontal,
-                      //               shrinkWrap: true,
-                      //               itemCount: manga.movieItems.length,
-                      //               itemBuilder: (BuildContext context, int i) {
-                      //                 return Column(
-                      //                   crossAxisAlignment:
-                      //                       CrossAxisAlignment.start,
-                      //                   children: <Widget>[
-                      //                     Container(
-                      //                       height: 210,
-                      //                       width: 135,
-                      //                       child: Card(
-                      //                         shape: RoundedRectangleBorder(
-                      //                           borderRadius: BorderRadius.all(
-                      //                             Radius.circular(10),
-                      //                           ),
-                      //                         ),
-                      //                         elevation: 4,
-                      //                         child: ClipRRect(
-                      //                           borderRadius: BorderRadius.all(
-                      //                             Radius.circular(10),
-                      //                           ),
-                      //                           child: Image.network(
-                      //                             manga.movieItems[i].coverImage,
-                      //                             height: 210,
-                      //                             width: 135,
-                      //                             fit: BoxFit.cover,
-                      //                           ),
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                     SizedBox(height: 3.0),
-                      //                     Center(
-                      //                       child: Text(
-                      //                         manga.movieItems[i].title,
-                      //                         style: TextStyle(
-                      //                           fontWeight: FontWeight.bold,
-                      //                           color:
-                      //                               Theme.of(context).accentColor,
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 );
-                      //               },
-                      //             ),
-                      //           );
-                      //         });
-                      //       } else {
-                      //         return Center(
-                      //           child: Text(
-                      //             dataSnapShot.error.toString(),
-                      //           ),
-                      //         );
-                      //       }
-                      //     })
                     ],
                   );
                 },
               );
             } else {
-              return Center(
-                child: Text(
-                  dataSnapShot.error.toString(),
+              return Container(
+                height: 100.0,
+                child: Center(
+                  child: Container(
+                    height: 42.0,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(0.0, 1.5),
+                          blurRadius: 1.0,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: InkWell(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Retry',
+                            style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               );
             }
           },
         ),
+        FutureBuilder(
+          future: Provider.of<RomanceMangaProvider>(context, listen: false)
+              .fetchAndRomanceManga(initOffset),
+          builder: (context, dataSnapShot) {
+            if (dataSnapShot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (dataSnapShot.error == null) {
+              print('successful');
+              return Consumer<RomanceMangaProvider>(
+                  builder: (context, manga, _) {
+                return Container(
+                  height: 230.0,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: manga.movieItems.length,
+                    itemBuilder: (BuildContext context, int i) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (_) => Details(
+                                    movie: manga.movieItems[i],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Hero(
+                              tag: manga.movieItems[i].id,
+                              child: Container(
+                                height: 210,
+                                width: 135,
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                  ),
+                                  elevation: 4,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    child: CachedNetworkImage(
+                                      imageUrl: manga.movieItems[i].posterImage,
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      placeholder: (context, url) => Center(
+                                        child: SpinKitFadingCircle(
+                                          size: 25,
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Center(
+                                        child: Icon(
+                                          Icons.error,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 3.0),
+                          Center(
+                            child: Container(
+                              width: 135.0,
+                              child: Center(
+                                child: Text(
+                                  manga.movieItems[i].title,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 10.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                );
+              });
+            } else {
+              return Container(
+                height: 500,
+                child: Center(
+                  child: Container(
+                    height: 42.0,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(0.0, 1.5),
+                          blurRadius: 1.0,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: InkWell(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Retry',
+                            style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+          },
+        )
       ],
     );
   }
 
   Widget buildAdventureAnime() {
-    return FutureBuilder(
-      future: Provider.of<CategoryAnimeProvider>(context, listen: false)
-          .fetchAndSetByCategories('anime', 'adventure', 10),
-      builder: (context, dataSnapShot) {
-        if (dataSnapShot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (dataSnapShot.error == null) {
-          print('successful');
-          return Consumer<CategoryAnimeProvider>(
-            builder: (context, anime, _) {
-              return Column(
-                children: [
-                  ListTile(
-                    leading: Text(
-                      'Anime\'s 💥',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w900, fontSize: 20.0),
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios),
+    return ListView(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      children: [
+        FutureBuilder(
+          future: Provider.of<AdventureAnimeProvider>(context, listen: false)
+              .fetchAndRomanceManga(initOffset),
+          builder: (context, dataSnapShot) {
+            if (dataSnapShot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Container(
+                  height: 300.0,
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
-                  Container(
-                    height: 230,
+                ),
+              );
+            } else if (dataSnapShot.error == null) {
+              print('successful');
+              return Consumer<AdventureAnimeProvider>(
+                builder: (context, anime, _) {
+                  return Column(
+                    children: [
+                      ListTile(
+                        leading: Text(
+                          'Anime\'s 💥',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900, fontSize: 20.0),
+                        ),
+                        trailing: InkWell(
+                          onTap: () {
+                            setState(() {
+                              initOffset += 10;
+                            });
+                          },
+                          child: Icon(Icons.arrow_forward_ios),
+                        ),
+                      ),
+                      Container(
+                        height: 230,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: anime.movieItems.length,
+                          itemBuilder: (BuildContext context, int i) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (_) => Details(
+                                          movie: anime.movieItems[i],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Hero(
+                                    tag: anime.movieItems[i].id,
+                                    child: Container(
+                                      height: 210,
+                                      width: 135,
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                        ),
+                                        elevation: 4,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                anime.movieItems[i].coverImage,
+                                            imageBuilder:
+                                                (context, imageProvider) =>
+                                                    Container(
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                            placeholder: (context, url) =>
+                                                Center(
+                                              child: SpinKitFadingCircle(
+                                                size: 25,
+                                                color: Theme.of(context)
+                                                    .accentColor,
+                                              ),
+                                            ),
+                                            errorWidget:
+                                                (context, url, error) => Center(
+                                              child: Icon(
+                                                Icons.error,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 3.0),
+                                Center(
+                                  child: Container(
+                                    width: 135.0,
+                                    child: Center(
+                                      child: Text(
+                                        anime.movieItems[i].title,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        leading: Text(
+                          'Manga\'s 💥',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900, fontSize: 20.0),
+                        ),
+                        trailing: InkWell(
+                          onTap: () {
+                            setState(() {
+                              initOffset += 10;
+                            });
+                          },
+                          child: Icon(Icons.arrow_forward_ios),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              return Container(
+                height: 100,
+                child: Center(
+                  child: Container(
+                    height: 42.0,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(0.0, 1.5),
+                          blurRadius: 1.0,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: InkWell(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Retry',
+                            style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+          },
+        ),
+        FutureBuilder(
+          future: Provider.of<AdventureMangaProvider>(context, listen: false)
+              .fetchAndRomanceManga(initOffset),
+          builder: (context, dataSnapShot) {
+            if (dataSnapShot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (dataSnapShot.error == null) {
+              print('successful');
+              return Consumer<AdventureMangaProvider>(
+                builder: (context, manga, _) {
+                  return Container(
+                    height: 230.0,
                     width: MediaQuery.of(context).size.width,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      itemCount: anime.movieItems.length,
+                      itemCount: manga.movieItems.length,
                       itemBuilder: (BuildContext context, int i) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Container(
-                              height: 210,
-                              width: 135,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (_) => Details(
+                                      movie: manga.movieItems[i],
+                                    ),
                                   ),
-                                ),
-                                elevation: 4,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
-                                  ),
-                                  child: Image.network(
-                                    anime.movieItems[i].coverImage,
-                                    height: 210,
-                                    width: 135,
-                                    fit: BoxFit.cover,
+                                );
+                              },
+                              child: Hero(
+                                tag: manga.movieItems[i].id,
+                                child: Container(
+                                  height: 210,
+                                  width: 135,
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    elevation: 4,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            manga.movieItems[i].posterImage,
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        placeholder: (context, url) => Center(
+                                          child: SpinKitFadingCircle(
+                                            size: 25,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            Center(
+                                          child: Icon(Icons.error),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                             SizedBox(height: 3.0),
                             Center(
-                              child: Text(
-                                anime.movieItems[i].title,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).accentColor,
+                              child: Container(
+                                width: 135.0,
+                                child: Center(
+                                  child: Text(
+                                    manga.movieItems[i].title,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 10.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                  ),
                                 ),
                               ),
                             )
@@ -749,99 +1179,54 @@ class _CategoriesState extends State<Categories> {
                         );
                       },
                     ),
-                  ),
-                  ListTile(
-                    leading: Text(
-                      'Manga\'s 💥',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w900, fontSize: 20.0),
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                  ),
-                  // FutureBuilder(
-                  //     future: Provider.of<CategoryAnimeProvider>(context,
-                  //             listen: false)
-                  //         .fetchAndSetByCategories('manga', 'adventure', 10),
-                  //     builder: (context, dataSnapShot) {
-                  //       if (dataSnapShot.connectionState ==
-                  //           ConnectionState.waiting) {
-                  //         return Center(child: CircularProgressIndicator());
-                  //       } else if (dataSnapShot.error == null) {
-                  //         print('successful');
-                  //         return Consumer<CategoryAnimeProvider>(
-                  //             builder: (context, manga, _) {
-                  //           return Container(
-                  //             height: 230.0,
-                  //             width: MediaQuery.of(context).size.width,
-                  //             child: ListView.builder(
-                  //               scrollDirection: Axis.horizontal,
-                  //               shrinkWrap: true,
-                  //               itemCount: manga.movieItems.length,
-                  //               itemBuilder: (BuildContext context, int i) {
-                  //                 return Column(
-                  //                   crossAxisAlignment:
-                  //                       CrossAxisAlignment.start,
-                  //                   children: <Widget>[
-                  //                     Container(
-                  //                       height: 210,
-                  //                       width: 135,
-                  //                       child: Card(
-                  //                         shape: RoundedRectangleBorder(
-                  //                           borderRadius: BorderRadius.all(
-                  //                             Radius.circular(10),
-                  //                           ),
-                  //                         ),
-                  //                         elevation: 4,
-                  //                         child: ClipRRect(
-                  //                           borderRadius: BorderRadius.all(
-                  //                             Radius.circular(10),
-                  //                           ),
-                  //                           child: Image.network(
-                  //                             manga.movieItems[i].coverImage,
-                  //                             height: 210,
-                  //                             width: 135,
-                  //                             fit: BoxFit.cover,
-                  //                           ),
-                  //                         ),
-                  //                       ),
-                  //                     ),
-                  //                     SizedBox(height: 3.0),
-                  //                     Center(
-                  //                       child: Text(
-                  //                         manga.movieItems[i].title,
-                  //                         style: TextStyle(
-                  //                           fontWeight: FontWeight.bold,
-                  //                           color:
-                  //                               Theme.of(context).accentColor,
-                  //                         ),
-                  //                       ),
-                  //                     ),
-                  //                   ],
-                  //                 );
-                  //               },
-                  //             ),
-                  //           );
-                  //         });
-                  //       } else {
-                  //         return Center(
-                  //           child: Text(
-                  //             dataSnapShot.error.toString(),
-                  //           ),
-                  //         );
-                  //       }
-                  //     })
-                ],
+                  );
+                },
               );
-            },
-          );
-        } else {
-          return Center(
-            child: Text(
-              dataSnapShot.error.toString(),
-            ),
-          );
-        }
-      },
+            } else {
+              return Container(
+                height: 500,
+                child: Center(
+                  child: Container(
+                    height: 42.0,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(0.0, 1.5),
+                          blurRadius: 1.0,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: InkWell(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Retry',
+                            style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+          },
+        )
+      ],
     );
   }
 

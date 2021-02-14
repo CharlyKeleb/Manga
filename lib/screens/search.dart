@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:manga_ui/providers/anime_items_provider.dart';
+import 'package:manga_ui/providers/items/anime_items_provider.dart';
+import 'package:manga_ui/widgets/details.dart';
 import 'package:provider/provider.dart';
 
 class Search extends StatefulWidget {
@@ -18,9 +20,9 @@ class _SearchState extends State<Search> {
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
-          onTap: (){
-            Navigator.pop(context);
-          },
+            onTap: () {
+              Navigator.pop(context);
+            },
             child: Icon(Icons.keyboard_backspace)),
         title: Flexible(
           child: TextField(
@@ -51,8 +53,8 @@ class _SearchState extends State<Search> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: GridView.builder(
-
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             childAspectRatio: 1.8 / 2.3,
                           ),
@@ -62,24 +64,25 @@ class _SearchState extends State<Search> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (_) => HeroDetails(
-                                    //       hero: superhero,
-                                    //     ),
-                                    //   ),
-                                    // );
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (_) => Details(
+                                          movie: anime.movieItems[i],
+                                        ),
+                                      ),
+                                    );
                                   },
                                   child: Hero(
-                                    tag: anime.movieItems[i].coverImage,
+                                    tag: anime.movieItems[i].id,
                                     child: Container(
                                       height: 200,
                                       width: 150,
                                       child: Card(
                                         color: Theme.of(context).accentColor,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         elevation: 5,
                                         child: ClipRRect(
@@ -99,17 +102,19 @@ class _SearchState extends State<Search> {
                                                 ),
                                               ),
                                             ),
-                                            placeholder: (context, url) => Center(
+                                            placeholder: (context, url) =>
+                                                Center(
                                               child: SpinKitFadingCircle(
                                                 size: 25,
-                                                color:
-                                                    Theme.of(context).accentColor,
+                                                color: Theme.of(context)
+                                                    .accentColor,
                                               ),
                                             ),
-                                            errorWidget: (context, url, error) =>
-                                                Center(
+                                            errorWidget:
+                                                (context, url, error) => Center(
                                               child: Icon(
-                                                Icons.sentiment_very_dissatisfied,
+                                                Icons
+                                                    .sentiment_very_dissatisfied,
                                               ),
                                             ),
                                           ),
@@ -121,7 +126,7 @@ class _SearchState extends State<Search> {
                                 SizedBox(height: 2.5),
                                 Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left:5.0),
+                                    padding: const EdgeInsets.only(left: 5.0),
                                     child: Text(
                                       anime.movieItems[i].title,
                                       style: TextStyle(

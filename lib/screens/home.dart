@@ -1,11 +1,17 @@
+import 'dart:math';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:manga_ui/providers/anime_items_provider.dart';
-import 'package:manga_ui/providers/popular_anime_item.dart';
-import 'package:manga_ui/providers/trending_anime_provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:manga_ui/providers/items/anime_items_provider.dart';
+import 'package:manga_ui/providers/popular/popular_anime_item.dart';
+import 'package:manga_ui/providers/trending/trending_anime_provider.dart';
 import 'package:manga_ui/screens/search.dart';
+import 'package:manga_ui/screens/settings.dart';
 import 'package:manga_ui/util/constants.dart';
+import 'package:manga_ui/widgets/details.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -14,35 +20,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List compilation = [
-    {
-      "title": "10 Best Compilation Manga",
-      "subtitle": "Nulla qutur sed, convallis at tellus."
-    },
-    {
-      "title": "10 Best Compilation Anime",
-      "subtitle": "Nulla quis lorem ut libero malesuada feugiat. Vivamus "
-          "magna justo, lacinetur sed, convallis at tellus."
-    },
-    {
-      "title": "10 Best Compilation Hentai",
-      "subtitle": "Nulla quis loro malesuada feugiat. Vivamus "
-          "magna justo, lacinia eget consectetur sed, convallis at tellus."
-    },
-    {
-      "title": "10 Best Compilation Cartoon",
-      "subtitle": "rem ut libero malesuada feugiat. Vivamus "
-          "magna justo, lacinia eget consectetur sed, convallis at tellus."
-    },
-  ];
+  var initOffset = Random().nextInt(4);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text(
-          "${Constants.appName}",
+        title: InkWell(
+          onTap: (){
+            Navigator.push(context, CupertinoPageRoute(builder: (_)=>Settings()));
+          },
+          child: Text(
+            "${Constants.appName}",
+          ),
         ),
         actions: <Widget>[
           Padding(
@@ -70,7 +61,10 @@ class _HomeState extends State<Home> {
                   ),
                   onTap: () {
                     Navigator.push(
-                        context, CupertinoPageRoute(builder: (_) => Search()));
+                        context,
+                        CupertinoPageRoute(
+                          builder: (_) => Search(),
+                        ));
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12),
@@ -95,69 +89,9 @@ class _HomeState extends State<Home> {
           Container(
             height: 200,
             width: MediaQuery.of(context).size.width,
-            // child: ListView.builder(
-            //   scrollDirection: Axis.horizontal,
-            //   shrinkWrap: true,
-            //   itemCount: compilation.length,
-            //   itemBuilder: (BuildContext context, int index) {
-            //     MaterialColor color = Colors.primaries[Random().nextInt(16)];
-            //     Map item = compilation[index];
-            //     Compile i = Compile.fromJson(item);
-            //
-            //     return Padding(
-            //       padding: const EdgeInsets.all(8.0),
-            //       child: Container(
-            //         height: 200,
-            //         width: 320,
-            //         decoration: BoxDecoration(
-            //           color: color,
-            //           boxShadow: [
-            //             BoxShadow(
-            //               color: color,
-            //               offset: Offset(0.0, 1.5),
-            //               blurRadius: 5.0,
-            //             ),
-            //           ],
-            //           borderRadius: BorderRadius.all(
-            //             Radius.circular(15),
-            //           ),
-            //         ),
-            //         child: Align(
-            //           alignment: Alignment.bottomLeft,
-            //           child: Padding(
-            //             padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-            //             child: Column(
-            //               mainAxisAlignment: MainAxisAlignment.end,
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: <Widget>[
-            //                 Text(
-            //                   i.title,
-            //                   style: TextStyle(
-            //                     fontSize: 17,
-            //                     color: Colors.white,
-            //                   ),
-            //                 ),
-            //                 SizedBox(
-            //                   height: 5,
-            //                 ),
-            //                 Text(
-            //                   i.subtitle,
-            //                   style: TextStyle(
-            //                     fontSize: 12,
-            //                     color: Colors.white,
-            //                   ),
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // ),
             child: FutureBuilder(
               future: Provider.of<AnimeItemsProvider>(context, listen: false)
-                  .fetchAndSetMovieItems("anime", 10),
+                  .fetchAndSetMovieItems("anime", initOffset),
               builder: (context, dataSnapShot) {
                 if (dataSnapShot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -174,48 +108,78 @@ class _HomeState extends State<Home> {
                         itemBuilder: (BuildContext context, i) {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 200,
-                              width: 320,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      anime.movieItems[i].coverImage),
-                                  fit: BoxFit.cover,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Theme.of(context).accentColor,
-                                    offset: Offset(0.0, 0.0),
-                                    blurRadius: 1.0,
+                            child: CachedNetworkImage(
+                              imageUrl: anime.movieItems[i]?.coverImage ??
+                                  'https://images.app.goo.gl/d2AGCefmiJmpF8QA8',
+                              imageBuilder: (context, imageProvider) => InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (_) => Details(
+                                        movie: anime.movieItems[i],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Hero(
+                                  tag: anime.movieItems[i].id,
+                                  child: Container(
+                                    height: 200,
+                                    width: 320,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Theme.of(context).accentColor,
+                                          offset: Offset(0.0, 0.0),
+                                          blurRadius: 1.0,
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(16, 0, 16, 16),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              anime.movieItems[i].title,
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w900,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ],
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15),
                                 ),
                               ),
-                              child: Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        anime.movieItems[i].title,
-                                        style: TextStyle(
-                                            fontSize: 17,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                    ],
-                                  ),
+                              placeholder: (context, url) => Center(
+                                child: SpinKitFadingCircle(
+                                  size: 25,
+                                  color: Theme.of(context).accentColor,
                                 ),
+                              ),
+                              errorWidget: (context, url, error) => Center(
+                                child: SizedBox(width: 0.1),
                               ),
                             ),
                           );
@@ -224,7 +188,44 @@ class _HomeState extends State<Home> {
                     },
                   );
                 } else {
-                  return Center(child: Text(dataSnapShot.error.toString()));
+                  return Center(
+                    child: Container(
+                      height: 42.0,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(0.0, 1.5),
+                            blurRadius: 1.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                      ),
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: InkWell(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                          onTap: () => Provider.of<AnimeItemsProvider>(context, listen: false)
+                              .fetchAndSetMovieItems("anime", initOffset),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Retry',
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
                 }
               },
             ),
@@ -238,11 +239,14 @@ class _HomeState extends State<Home> {
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
-                Icon(
-                  Feather.chevron_right,
-                  size: 30,
-                  color: Colors.grey,
-                )
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      initOffset += 10;
+                    });
+                  },
+                  child: Icon(Icons.arrow_forward_ios),
+                ),
               ],
             ),
           ),
@@ -252,7 +256,7 @@ class _HomeState extends State<Home> {
             child: FutureBuilder(
               future:
                   Provider.of<TrendingAnimesProvider>(context, listen: false)
-                      .fetchAndSetMovieItems('anime', 10),
+                      .fetchAndSetMovieItems('anime', initOffset),
               builder: (context, dataSnapShot) {
                 if (dataSnapShot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -274,31 +278,64 @@ class _HomeState extends State<Home> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
-                                Container(
-                                  height: 150,
-                                  width: 110,
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (_) => Details(
+                                          movie: anime.movieItems[i],
+                                        ),
                                       ),
-                                    ),
-                                    elevation: 4,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
-                                      ),
-                                      // child: Image.asset(
-                                      //   "assets/images/${Random().nextInt(5)}.jpg",
-                                      //   height: 150,
-                                      //   width: 110,
-                                      //   fit: BoxFit.cover,
-                                      // ),
-                                      child: Image.network(
-                                        anime.movieItems[i].coverImage,
-                                        height: 150.0,
-                                        width: 110,
-                                        fit: BoxFit.cover,
+                                    );
+                                  },
+                                  child: Hero(
+                                    tag: anime.movieItems[i].id,
+                                    child: Container(
+                                      height: 150,
+                                      width: 110,
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                        ),
+                                        elevation: 4,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                anime.movieItems[i].coverImage,
+                                            imageBuilder:
+                                                (context, imageProvider) =>
+                                                    Container(
+                                              height: 150.0,
+                                              width: 110.0,
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                            placeholder: (context, url) =>
+                                                Center(
+                                              child: SpinKitFadingCircle(
+                                                size: 25,
+                                                color: Theme.of(context)
+                                                    .accentColor,
+                                              ),
+                                            ),
+                                            errorWidget:
+                                                (context, url, error) => Center(
+                                              child: Icon(
+                                                Icons.error,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -310,12 +347,14 @@ class _HomeState extends State<Home> {
                                     fontSize: 12.0,
                                   ),
                                 ),
-                                Text(
-                                  anime.movieItems[i].type,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).accentColor,
-                                    fontSize: 16,
+                                Center(
+                                  child: Text(
+                                    anime.movieItems[i].type,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).accentColor,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -326,7 +365,43 @@ class _HomeState extends State<Home> {
                     },
                   );
                 } else {
-                  return Center(child: Text(dataSnapShot.error.toString()));
+                  return Center(
+                    child: Container(
+                      height: 42.0,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(0.0, 1.5),
+                            blurRadius: 1.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                      ),
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: InkWell(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                          onTap: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Retry',
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
                 }
               },
             ),
@@ -348,11 +423,14 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Spacer(),
-                Icon(
-                  Feather.chevron_right,
-                  color: Colors.grey,
-                  size: 30,
-                )
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      initOffset += 10;
+                    });
+                  },
+                  child: Icon(Icons.arrow_forward_ios),
+                ),
               ],
             ),
           ),
@@ -361,7 +439,7 @@ class _HomeState extends State<Home> {
             width: MediaQuery.of(context).size.width,
             child: FutureBuilder(
               future: Provider.of<PopularAnimeProvider>(context, listen: false)
-                  .fetchAndSetPopularMovieItems('manga', 10),
+                  .fetchAndSetPopularMovieItems('manga', initOffset),
               builder: (context, dataSnapShot) {
                 if (dataSnapShot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -380,17 +458,35 @@ class _HomeState extends State<Home> {
                             padding: const EdgeInsets.all(10.0),
                             child: Column(
                               children: [
-                                Container(
-                                  height: 130.0,
-                                  width: 160.0,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: Theme.of(context).accentColor,
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        manga.movieItems[i]?.posterImage ?? "",
+                                CachedNetworkImage(
+                                  imageUrl: manga.movieItems[i].posterImage,
+                                  imageBuilder: (context, imageProvider) =>
+                                      InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (_) => Details(
+                                            movie: manga.movieItems[i],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Hero(
+                                      tag: manga.movieItems[i].id,
+                                      child: Container(
+                                        height: 150.0,
+                                        width: 160.0,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                          color: Theme.of(context).accentColor,
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       ),
-                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
@@ -398,9 +494,10 @@ class _HomeState extends State<Home> {
                                 Text(
                                   manga.movieItems[i].title,
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12.0,
-                                      color: Theme.of(context).accentColor),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.0,
+                                    color: Theme.of(context).accentColor,
+                                  ),
                                 )
                               ],
                             ),
@@ -411,10 +508,39 @@ class _HomeState extends State<Home> {
                   );
                 } else
                   return Center(
-                    child: Text(
-                      dataSnapShot.error.toString(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                    child: Container(
+                      height: 42.0,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(0.0, 1.5),
+                            blurRadius: 1.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                      ),
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: InkWell(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                          onTap: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Retry',
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   );
@@ -426,22 +552,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-//
-// class Compile {
-//   String title;
-//   String subtitle;
-//
-//   Compile({this.title, this.subtitle});
-//
-//   Compile.fromJson(Map<String, dynamic> json) {
-//     title = json['title'];
-//     subtitle = json['subtitle'];
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['title'] = this.title;
-//     data['subtitle'] = this.subtitle;
-//     return data;
-//   }
-// }

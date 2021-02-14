@@ -25,6 +25,11 @@ dependencies:
   http: ^0.12.2
   cached_network_image: ^2.3.2+1
   flutter_spinkit: ^4.1.2
+  smooth_star_rating: ^1.1.1
+  intl: ^0.16.1
+  percent_indicator: ^2.1.9+1
+  shared_preferences: ^0.5.12+4
+  youtube_player_flutter: ^7.0.0
   
 dev_dependencies:
   flutter_test:
