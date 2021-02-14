@@ -4,18 +4,18 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:manga_ui/models/manga_items.dart';
 
-class RomanceAnimeProvider with ChangeNotifier {
+class AdventureMangaProvider with ChangeNotifier {
   List<AnimeItem> _animeItems = List<AnimeItem>();
 
   List<AnimeItem> get movieItems {
     return [..._animeItems];
   }
 
-  Future<void> fetchAndRomanceAnime(
+  Future<void> fetchAndRomanceManga(
       int offset,
       [int limit = 10]) async {
     final url =
-        "https://kitsu.io/api/edge/manga?filter[categories]=romance&page[limit]=$limit&page[offset]=$offset&sort=popularityRank";
+        "https://kitsu.io/api/edge/manga?filter[categories]=adventure&page[limit]=$limit&page[offset]=$offset&sort=popularityRank";
     final response = await http.get(url);
     final responseData = jsonDecode(response.body)["data"] as List<dynamic>;
     print(responseData);
