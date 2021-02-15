@@ -13,6 +13,12 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.keyboard_backspace),
+        ),
         backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0.0,
         title: Text(

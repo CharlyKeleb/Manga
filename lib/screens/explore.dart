@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,7 @@ class _ExploreState extends State<Explore> {
   PageController _pageController;
   int _page = 0;
   int selectedItem = 0;
+  var initOffset = Random().nextInt(10);
 
   buildTitle() {
     if (0 == selectedItem) {
@@ -47,7 +50,7 @@ class _ExploreState extends State<Explore> {
       body: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               InkWell(
                 onTap: () {
@@ -199,6 +202,7 @@ class _ExploreState extends State<Explore> {
               ),
             ],
           ),
+          SizedBox(height: 10.0),
           Expanded(
             child: Container(
               height: MediaQuery.of(context).size.height,
@@ -212,12 +216,22 @@ class _ExploreState extends State<Explore> {
                   buildTrendingManga(),
                   buildTrendingAnime(),
                   buildPopularManga(),
-                  buildPopularAnime()
+                  buildPopularAnime(),
                 ],
               ),
             ),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            initOffset += 10;
+          });
+        },
+        child: Center(
+          child: Icon(Icons.arrow_downward_sharp),
+        ),
       ),
     );
   }
@@ -225,7 +239,7 @@ class _ExploreState extends State<Explore> {
   Widget buildMangaSeries() {
     return FutureBuilder(
       future: Provider.of<MangaItemsProvider>(context, listen: false)
-          .fetchAndSetMovieItems(10),
+          .fetchAndSetMovieItems(initOffset),
       builder: (context, dataSnapShot) {
         if (dataSnapShot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -312,7 +326,7 @@ class _ExploreState extends State<Explore> {
             },
           );
         } else {
-          return  Center(
+          return Center(
             child: Container(
               height: 42.0,
               decoration: BoxDecoration(
@@ -330,7 +344,6 @@ class _ExploreState extends State<Explore> {
               child: Material(
                 type: MaterialType.transparency,
                 child: InkWell(
-
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -358,7 +371,7 @@ class _ExploreState extends State<Explore> {
   Widget buildAnimeSeries() {
     return FutureBuilder(
       future: Provider.of<AnimeItemsProvider>(context, listen: false)
-          .fetchAndSetMovieItems('anime', 10),
+          .fetchAndSetMovieItems('anime', initOffset),
       builder: (context, dataSnapShot) {
         if (dataSnapShot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -445,7 +458,7 @@ class _ExploreState extends State<Explore> {
             },
           );
         } else {
-          return  Center(
+          return Center(
             child: Container(
               height: 42.0,
               decoration: BoxDecoration(
@@ -463,7 +476,6 @@ class _ExploreState extends State<Explore> {
               child: Material(
                 type: MaterialType.transparency,
                 child: InkWell(
-
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -491,7 +503,7 @@ class _ExploreState extends State<Explore> {
   Widget buildTrendingManga() {
     return FutureBuilder(
       future: Provider.of<TrendingMangaProvider>(context, listen: false)
-          .fetchAndSetMovieItems(10),
+          .fetchAndSetMovieItems(initOffset),
       builder: (context, dataSnapShot) {
         if (dataSnapShot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -578,7 +590,7 @@ class _ExploreState extends State<Explore> {
             },
           );
         } else {
-          return  Center(
+          return Center(
             child: Container(
               height: 42.0,
               decoration: BoxDecoration(
@@ -596,7 +608,6 @@ class _ExploreState extends State<Explore> {
               child: Material(
                 type: MaterialType.transparency,
                 child: InkWell(
-
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -624,7 +635,7 @@ class _ExploreState extends State<Explore> {
   Widget buildTrendingAnime() {
     return FutureBuilder(
       future: Provider.of<TrendingAnimesProvider>(context, listen: false)
-          .fetchAndSetMovieItems('anime', 9),
+          .fetchAndSetMovieItems('anime', initOffset),
       builder: (context, dataSnapShot) {
         if (dataSnapShot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -711,7 +722,7 @@ class _ExploreState extends State<Explore> {
             },
           );
         } else {
-          return  Center(
+          return Center(
             child: Container(
               height: 42.0,
               decoration: BoxDecoration(
@@ -729,7 +740,6 @@ class _ExploreState extends State<Explore> {
               child: Material(
                 type: MaterialType.transparency,
                 child: InkWell(
-
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -757,7 +767,7 @@ class _ExploreState extends State<Explore> {
   Widget buildPopularManga() {
     return FutureBuilder(
       future: Provider.of<PopularMangaProvider>(context, listen: false)
-          .fetchAndSetPopularMovieItems('manga', 9),
+          .fetchAndSetPopularMovieItems('manga', initOffset),
       builder: (context, dataSnapShot) {
         if (dataSnapShot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -844,7 +854,7 @@ class _ExploreState extends State<Explore> {
             },
           );
         } else {
-          return  Center(
+          return Center(
             child: Container(
               height: 42.0,
               decoration: BoxDecoration(
@@ -862,7 +872,6 @@ class _ExploreState extends State<Explore> {
               child: Material(
                 type: MaterialType.transparency,
                 child: InkWell(
-
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -890,7 +899,7 @@ class _ExploreState extends State<Explore> {
   Widget buildPopularAnime() {
     return FutureBuilder(
       future: Provider.of<PopularAnimeProvider>(context, listen: false)
-          .fetchAndSetPopularMovieItems('anime', 9),
+          .fetchAndSetPopularMovieItems('anime', initOffset),
       builder: (context, dataSnapShot) {
         if (dataSnapShot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -995,7 +1004,6 @@ class _ExploreState extends State<Explore> {
               child: Material(
                 type: MaterialType.transparency,
                 child: InkWell(
-
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),

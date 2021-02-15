@@ -159,6 +159,8 @@ class _DetailsState extends State<Details> {
                         ),
                         subtitle: Text(widget.movie.description),
                       ),
+                      SizedBox(height: 5.0),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,6 +183,8 @@ class _DetailsState extends State<Details> {
                           )
                         ],
                       ),
+                      SizedBox(height: 5.0),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,6 +215,8 @@ class _DetailsState extends State<Details> {
                           ),
                         ],
                       ),
+                      SizedBox(height: 5.0),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,18 +250,21 @@ class _DetailsState extends State<Details> {
                                     "  ${widget.movie.averageRating.toString()}%",
                                 style: TextStyle(fontWeight: FontWeight.w900),
                               ),
-                        subtitle: LinearPercentIndicator(
-                          animation: true,
-                          lineHeight: 15.0,
-                          animationDuration: 2500,
-                          percent: widget.movie.averageRating == null
-                              ? 0.0
-                              : (double.parse(
-                                          widget.movie?.averageRating ?? 10) /
-                                      100)
-                                  .toDouble(),
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: Colors.blue,
+                        subtitle: Padding(
+                          padding: const EdgeInsets.symmetric(vertical:5.0),
+                          child: LinearPercentIndicator(
+                            animation: true,
+                            lineHeight: 15.0,
+                            animationDuration: 2500,
+                            percent: widget.movie.averageRating == null
+                                ? 0.0
+                                : (double.parse(
+                                            widget.movie?.averageRating ?? 10) /
+                                        100)
+                                    .toDouble(),
+                            linearStrokeCap: LinearStrokeCap.roundAll,
+                            progressColor: Colors.blue,
+                          ),
                         ),
                       ),
                     ],

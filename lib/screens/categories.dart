@@ -45,118 +45,122 @@ class _CategoriesState extends State<Categories> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            navigationTapped(0);
-                          });
-                          selectItem(0);
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 110,
-                          decoration: BoxDecoration(
-                            color: 0 == selectedItem ? Colors.red : Colors.pink,
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.whatshot,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 3.0),
-                                  child: Text(
-                                    'Action',
-                                    style: TextStyle(color: Colors.white),
+                  child: Container(
+                    height: 30.0,
+                    width:MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              navigationTapped(0);
+                            });
+                            selectItem(0);
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 110,
+                            decoration: BoxDecoration(
+                              color: 0 == selectedItem ? Colors.red : Colors.pink,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.whatshot,
+                                    color: Theme.of(context).accentColor,
                                   ),
-                                )
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 3.0),
+                                    child: Text(
+                                      'Action',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 5.0),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            navigationTapped(1);
-                          });
-                          selectItem(1);
-                          print(_page);
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 110,
-                          decoration: BoxDecoration(
-                            color: 1 == selectedItem ? Colors.red : Colors.pink,
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.favorite,
-                                  color: Colors.white,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 3.0),
-                                  child: Text(
-                                    'Romance',
-                                    style: TextStyle(color: Colors.white),
+                  //      SizedBox(width: 5.0),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              navigationTapped(1);
+                            });
+                            selectItem(1);
+                            print(_page);
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 110,
+                            decoration: BoxDecoration(
+                              color: 1 == selectedItem ? Colors.red : Colors.pink,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.favorite,
+                                    color: Colors.white,
                                   ),
-                                )
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 3.0),
+                                    child: Text(
+                                      'Romance',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 5.0),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            navigationTapped(2);
-                          });
-                          selectItem(2);
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 110,
-                          decoration: BoxDecoration(
-                            color: 2 == selectedItem ? Colors.red : Colors.pink,
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.wc,
-                                  color: Colors.white,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 3.0),
-                                  child: Text(
-                                    'Adventure',
-                                    style: TextStyle(color: Colors.white),
+                     //   SizedBox(width: 5.0),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              navigationTapped(2);
+                            });
+                            selectItem(2);
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 110,
+                            decoration: BoxDecoration(
+                              color: 2 == selectedItem ? Colors.red : Colors.pink,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.wc,
+                                    color: Colors.white,
                                   ),
-                                )
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 3.0),
+                                    child: Text(
+                                      'Adventure',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
