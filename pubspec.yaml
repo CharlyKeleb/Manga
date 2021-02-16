@@ -30,10 +30,19 @@ dependencies:
   percent_indicator: ^2.1.9+1
   shared_preferences: ^0.5.12+4
   youtube_player_flutter: ^7.0.0
+  splashscreen: ^1.2.0
+
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: "^0.8.0"
+
+flutter_icons:
+  image_path: "assets/images/lg.jpg"
+  android: true
+  ios: true
 
 
 flutter:
