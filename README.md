@@ -1,6 +1,22 @@
-# manga_ui
+# manga kotaku
 
-A new Flutter application.
+A New Application to see the list of available manga and animes including their trailers if provided.
+
+Star⭐ the repo if you like what you see😉
+
+## ✨ Requirements
+* Any Operating System (ie. MacOS X, Linux, Windows)
+* Any IDE with Flutter SDK installed (ie. IntelliJ, Android Studio, VSCode etc)
+* A little knowledge of Dart and Flutter
+* A brain to think 🤓🤓
+
+## 📸 ScreenShots
+
+<img src="ss/kotaku.gif" width="200">
+
+|<img src="ss/1.png" width="400">|<img src="ss/2.png" width="400">|
+|<img src="ss/3.png" width="400">|<img src="ss/4.png" width="400">|
+|<img src="ss/5.png" width="400">
 
 ## Getting Started
 
